@@ -6,17 +6,25 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Calendar;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class FileUploadService {
-	private static String SAVE_PATH = "/mysite-uploads/gallery";
-	private static String URL_BASE = "/assets/gallery";	
-	
-	public String restoreImage(MultipartFile file) throws RuntimeException {
+	@Value("${mysite.upload.location}")
+	private String uploadLocation;
+
+	@Value("${mysite.static.pathBase}")
+	private String staticPathBase;
+
+
+	public String restoreImage(MultipartFile file, String serviceName) throws RuntimeException {
+		final String savePath = uploadLocation + "/" + serviceName;
+		final String urlBase = staticPathBase + "/" + serviceName;
+
 		try {
-			File uploadDirectory = new File(SAVE_PATH);
+			File uploadDirectory = new File(savePath);
 			if(!uploadDirectory.exists()) {
 				uploadDirectory.mkdirs();
 			}
@@ -30,11 +38,11 @@ public class FileUploadService {
 			String saveFilename = generateSaveFilename(extName);
 			
 			byte[] data = file.getBytes();
-			OutputStream os = new FileOutputStream(SAVE_PATH + "/" + saveFilename);
+			OutputStream os = new FileOutputStream(savePath + "/" + saveFilename);
 			os.write(data);
 			os.close();
 
-			return URL_BASE + "/" + saveFilename;
+			return urlBase + "/" + saveFilename;
 			
 		} catch(IOException ex) {
 			throw new RuntimeException("file upload error:" + ex);

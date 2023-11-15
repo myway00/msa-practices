@@ -9,6 +9,6 @@ import lombok.ToString;
 @ToString
 public class GalleryVo {
 	private Long no;
-	private String url;
-	private String comments;
+	private String imageUrl;
+	private String comment;
 }

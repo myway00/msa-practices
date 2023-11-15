@@ -2,11 +2,10 @@ package com.poscodx.mysite.service;
 
 import java.util.List;
 
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.poscodx.mysite.repository.GuestbookRepository;
 import com.poscodx.mysite.vo.GuestbookVo;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class GuestbookService {
@@ -16,12 +15,12 @@ public class GuestbookService {
 		this.guestbookRepository = guestbookRepository;
 	}
 
-	public List<GuestbookVo> getMessageList(Long no) {
+	public List<GuestbookVo> getContentsList(Long no) {
 		return guestbookRepository.findAll(no);
 	}
 	
 	@Transactional
-	public boolean deleteMessage(Long no, String password) {
+	public boolean deleteContents(Long no, String password) {
 		GuestbookVo vo = new GuestbookVo();
 		vo.setNo(no);
 		vo.setPassword(password);
@@ -37,7 +36,7 @@ public class GuestbookService {
 //		return true;
 	}
 
-	public boolean addMessage(GuestbookVo vo) {
+	public boolean addContents(GuestbookVo vo) {
 		return guestbookRepository.insert(vo);
 	}
 }

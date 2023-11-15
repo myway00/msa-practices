@@ -2,10 +2,9 @@ package com.poscodx.mysite.repository;
 
 import java.util.List;
 
+import com.poscodx.mysite.vo.GuestbookVo;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
-
-import com.poscodx.mysite.vo.GuestbookVo;
 
 @Repository
 public class GuestbookRepository {
